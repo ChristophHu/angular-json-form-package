@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GenericControl, JsonFormService, convertArray } from '@christophhu/json-form';
+import { GenericControl, JsonFormService, convertArray, convertDependingArray } from '@christophhu/json-form';
 import { Observable, map, of, zip } from 'rxjs';
 
 @Component({
@@ -14,14 +14,25 @@ export class AppComponent {
 
   formContent: GenericControl[]
   formStatus: any
-  formValue: any = { id: '1', name: 'Thomas', funktion: '2', active: true, dayOfBirth: '2021-01-01T00:00', description: '' }
+  formValue: any = { id: '1', name: 'Thomas', funktion: '2', funktion2: '3', active: true, dayOfBirth: '2021-01-01T00:00', description: '' }
 
   options$: Observable<any> = of([
-    { id: '1', value: 'Option 1', more: 'more' },
-    { id: '2', value: 'Option 2', more: 'more' },
-    { id: '3', value: 'Option 3', more: 'more' },
-    { id: '4', value: 'Option 4', more: 'more' },
-    { id: '5', value: 'Option 5', more: 'more' }
+    { id: '1', value: 'Kategorie1' },
+    { id: '2', value: 'Kategorie2' },
+    { id: '3', value: 'Kategorie3' },
+    { id: '4', value: 'Kategorie4' },
+    { id: '5', value: 'Kategorie5' }
+  ])
+  depOptions$: Observable<any> = of([
+    { id: '1', value: 'Bestandteil1', dep: 'Kategorie1', dep2: '1' },
+    { id: '2', value: 'Bestandteil2', dep: 'Kategorie1', dep2: '1' },
+    { id: '3', value: 'Bestandteil3', dep: 'Kategorie2', dep2: '2' },
+    { id: '4', value: 'Bestandteil4', dep: 'Kategorie3', dep2: '3' },
+    { id: '5', value: 'Bestandteil5', dep: 'Kategorie3', dep2: '3' },
+    { id: '6', value: 'Bestandteil6', dep: 'Kategorie4', dep2: '4' },
+    { id: '7', value: 'Bestandteil7', dep: 'Kategorie5', dep2: '5' },
+    { id: '8', value: 'Bestandteil8', dep: 'Kategorie5', dep2: '5' },
+    { id: '9', value: 'Bestandteil9', dep: 'Kategorie5', dep2: '5' }
   ])
   
   constructor(private _jsonFormService: JsonFormService) {
@@ -43,6 +54,38 @@ export class AppComponent {
             key: 'id',
             label: 'id',
             placeholder: '000'
+          },
+          {
+            type: 'password',
+            // disabled: true,
+            hidden: false,
+            key: 'password',
+            label: 'Passwort',
+            placeholder: 'Passwort',
+            show: false,
+            validators: [
+              { validStrongPassword: true }
+            ]
+          },
+          {
+            type: 'input',
+            // disabled: true,
+            hidden: false,
+            key: 'mask',
+            label: 'Mask',
+            mask: '00-000-00',
+            placeholder: '12-345-67'
+          },
+          {
+            type: 'input',
+            // disabled: true,
+            hidden: false,
+            key: 'zip',
+            label: 'ZIP',
+            placeholder: '12345',
+            validators: [
+              { zipCodeValidator: true }
+            ]
           },
           {
             type: 'input',
@@ -72,6 +115,17 @@ export class AppComponent {
             ]
           },
           {
+            type: 'dependedselect',
+            key: 'funktion2',
+            label: 'Funktion2',
+            dependOnKey: 'funktion',
+            options$:  convertDependingArray(this.depOptions$, 'value', 'dep2'),
+            // options:  convertArray(data.depOptions, 'value', 'dep'),
+            validators: [
+              { required: true }
+            ]
+          },
+          {
             type: 'datetime-local',
             defaultValue: '',
             hidden: false,
@@ -85,6 +139,26 @@ export class AppComponent {
             key: 'description',
             label: 'Beschreibung',
             placeholder: 'Beschreibung zur Person'
+          },
+          {
+            type: 'fileupload',
+            disabled: false,
+            hidden: false,
+            key: 'file',
+            label: 'Datei',
+            placeholder: 'Datei',
+            multiple: true,
+            upload: {
+              url: 'https://v2.convertapi.com/upload',
+              type: 'blob'
+            }
+          },
+          {
+            type: 'imageslider',
+            disabled: false,
+            hidden: false,
+            key: 'images',
+            label: 'Galerie'
           }
         )
       }
@@ -93,6 +167,11 @@ export class AppComponent {
     this._jsonFormService.setFormData(this.formValue)
 
     // this.formData$ = this._jsonFormService.getFormData()
+    this._jsonFormService.files$.subscribe({
+      next: (files) => {
+        console.log('files: ', files)
+      }
+    })
   }
 
   valueChanges(formValue: any) {
