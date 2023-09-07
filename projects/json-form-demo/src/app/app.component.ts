@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GenericControl, JsonFormService, convertArray, convertDependingArray } from '@christophhu/json-form';
-import { Observable, map, of, zip } from 'rxjs';
+import { Observable, map, of, zip, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -34,6 +34,18 @@ export class AppComponent {
     { id: '8', value: 'Bestandteil8', dep: 'Kategorie5', dep2: '5' },
     { id: '9', value: 'Bestandteil9', dep: 'Kategorie5', dep2: '5' }
   ])
+
+  // let t: any = forkJoin([
+  //   this.options$,
+  //   this.dataService.fetchArrayTwo()
+  // ]).subscribe(([arrayOne, arrayTwo]) => {
+  //   this.joined$.next(
+  //     arrayOne.map(item => ({
+  //       ...arrayTwo.find(t => t.arrayOneId === item.id),
+  //       ...item
+  //     }))
+  //   );
+  // });
   
   constructor(private _jsonFormService: JsonFormService) {
     this.formContent = []
@@ -119,8 +131,8 @@ export class AppComponent {
             key: 'funktion2',
             label: 'Funktion2',
             dependOnKey: 'funktion',
-            options$:  convertDependingArray(this.depOptions$, 'value', 'dep2'),
-            // options:  convertArray(data.depOptions, 'value', 'dep'),
+            // options$:  convertDependingArray(this.depOptions$, 'value', 'dep2'),
+            options$:  convertDependingArray(this.depOptions$, 'value', 'dep'),
             validators: [
               { required: true }
             ]
