@@ -1,2 +1,4 @@
-<json-form [formContent]="formContent" (formValue)="valueChanges($event)" (formStatus)="statusChanges($event)"></json-form>
-<pre>{{ formValue | json }}</pre>
+<div class="my-5 grid grid-cols-2 gap-4 overflow-hidden">
+    <json-form [formContent]="formContent" (formValue)="valueChanges($event)" (formStatus)="statusChanges($event)"></json-form>
+    <pre class="p-4 bg-blue-100 text-sm shadow-lg rounded">{{ formValue | json }}</pre>
+</div>
