@@ -76,7 +76,7 @@ export class AppComponent {
             disabled: false,
             hidden: false,
             key: 'password',
-            label: 'Passwort',
+            label: 'Passwort (with strong validation)',
             placeholder: 'Passwort',
             show: false,
             validators: [
@@ -97,17 +97,18 @@ export class AppComponent {
             // disabled: true,
             hidden: false,
             key: 'zip',
-            label: 'ZIP',
+            label: 'ZIP (with validation - 5 numbers required',
             placeholder: '12345',
             validators: [
-              { zipCodeValidator: true }
+              { zipCodeValidator: true },
+              { required: true }
             ]
           },
           {
             type: 'input',
             defaultValue: '',
             key: 'name',
-            label: 'Name',
+            label: 'Name (required)',
             placeholder: 'Thomas',
             validators: [
               { required: true }
@@ -126,13 +127,13 @@ export class AppComponent {
             defaultValue: false,
             disabled: false,
             key: 'toggle',
-            label: 'Toggle',
+            label: 'Aktiv',
             value: false
           },
           {
             type: 'select',
             key: 'funktion',
-            label: 'Funktion',
+            label: 'Funktion (required)',
             options: convertArray(data.options, 'value'),
             validators: [
               { required: true }
@@ -145,7 +146,7 @@ export class AppComponent {
             disabled: true,
             hidden: false,
             key: 'function_id',
-            label: 'Depended input',
+            label: 'Depended input (depend on \'Funktion\'))',
             placeholder: '',
             dependOnKey: 'funktion',
             options: convertArray(data.options, 'value'),
@@ -153,7 +154,7 @@ export class AppComponent {
           {
             type: 'dependedselect',
             key: 'funktion2',
-            label: 'Funktion2',
+            label: 'Funktion2 (depend on \'Funktion\' and required)',
             dependOnKey: 'funktion',
             options$:  convertDependingArray(this.depOptions$, 'value', '0'),
             validators: [
@@ -200,7 +201,7 @@ export class AppComponent {
             disabled: false,
             hidden: false,
             key: 'signature',
-            label: 'Unterschrift',
+            label: 'Unterschrift (required)',
             description: 'Die sachliche, fachtechnische oder rechnerische Richtigkeit wird durch Unterzeichnung des Vermerks „Sachlich richtig“, „Fachtechnisch richtig“ oder „Rechnerisch richtig“ bescheinigt.',
             validators: [
               { required: true }
