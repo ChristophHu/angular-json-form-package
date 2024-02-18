@@ -2,7 +2,7 @@ import { JsonPipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Observable, map, of, zip } from 'rxjs';
-import { JsonFormComponent, GenericControl, JsonFormService, convertArray, convertDependingArray } from '@christophhu/json-form';
+import { JsonFormComponent, SelectDropdownComponent, GenericControl, JsonFormService, convertArray, convertDependingArray } from '@christophhu/json-form';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,8 @@ import { JsonFormComponent, GenericControl, JsonFormService, convertArray, conve
   imports: [
     HttpClientModule,
     JsonFormComponent,
-    JsonPipe
+    JsonPipe,
+    SelectDropdownComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
@@ -143,6 +144,13 @@ export class AppComponent {
             ]
           },
           {
+            type: 'searchselect',
+            disabled: false,
+            hidden: false,
+            key: 'searchfunktion',
+            label: 'Funktion',
+          },
+          {
             type: 'input',
             class: '',
             defaultValue: 0,
@@ -213,7 +221,7 @@ export class AppComponent {
           // {
           //   type: 'input',
           //   class: '',
-          //   defaultValu e: 0,
+          //   defaultValue: 0,
           //   // disabled: true,
           //   hidden: false,
           //   key: 'test',

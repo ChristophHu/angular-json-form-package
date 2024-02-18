@@ -1,4 +1,5 @@
 <div class="my-5 grid grid-cols-2 gap-4 overflow-hidden">
   <json-form [formContent]="formContent" (formValue)="valueChanges($event)" (formStatus)="statusChanges($event)"></json-form>
   <pre class="p-4 bg-blue-100 text-sm shadow-lg rounded">{{ formValue | json }}</pre>
+  <select-dropdown tabindex="1" (change)="changeValue($event)" [optionItemTemplate]="optionTemplate" [selectedItemTemplate]="optionTemplate" [multiple]="false" [(ngModel)]="optTemplate" [options]="options" [config]="config"></select-dropdown>
 </div>
