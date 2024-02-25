@@ -1,5 +1,9 @@
+<h2 class="text-light text-xl">Settings</h2>
+<div>
+  <themes></themes>
+</div>
+<h2 class="text-light text-xl">Form</h2>
 <div class="my-5 grid grid-cols-2 gap-4 overflow-hidden">
-  <json-form [formContent]="formContent" (formValue)="valueChanges($event)" (formStatus)="statusChanges($event)"></json-form>
-  <pre class="p-4 bg-blue-100 text-sm shadow-lg rounded">{{ formValue | json }}</pre>
-  <select-dropdown tabindex="1" (change)="changeValue($event)" [optionItemTemplate]="optionTemplate" [selectedItemTemplate]="optionTemplate" [multiple]="false" [(ngModel)]="optTemplate" [options]="options" [config]="config"></select-dropdown>
+  <nxt-json-form [formContent]="formContent" (formValue)="valueChanges($event)" (formStatus)="statusChanges($event)"></nxt-json-form>
+  <pre class="p-4 bg-input text-sm shadow-lg rounded">{{ formValue | json }}</pre>
 </div>

@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Observable, map, of, zip } from 'rxjs';
 import { JsonFormComponent, SelectDropdownComponent, GenericControl, JsonFormService, convertArray, convertDependingArray } from '@christophhu/json-form';
+import { ThemesComponent } from './shared/components/themes/themes.component';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ import { JsonFormComponent, SelectDropdownComponent, GenericControl, JsonFormSer
     HttpClientModule,
     JsonFormComponent,
     JsonPipe,
-    SelectDropdownComponent
+    SelectDropdownComponent,
+    ThemesComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
